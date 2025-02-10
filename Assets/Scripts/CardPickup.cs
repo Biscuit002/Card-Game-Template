@@ -5,38 +5,42 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private bool isMouseDragging;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         isMouseDragging = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isMouseDragging)
         {
-            print("mouse dragging");
             Vector3 mousePosition = Input.mousePosition;
-
-            // Convert screen position to world position using the camera
-            mousePosition = Camera.main.ScreenToWorldPoint(mousePosition);
-
-            // Ensure z is zero to keep the object on the same plane
-            mousePosition.z = 0;
-
-            // Move the object towards the mouse position
-            transform.position = Vector3.MoveTowards(transform.position, mousePosition, 0.5f);
+            
+            // Calculate distance from camera to the card along z-axis.
+            float distance = Mathf.Abs(Camera.main.transform.position.z - transform.position.z);
+            // Convert mouse position to world coordinates at the card's distance.
+            mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, distance));
+            mousePosition.z = 0; // Lock z
+            
+            // Calculate screen boundaries in world space at the card's depth.
+            Vector3 lowerLeft = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, distance));
+            Vector3 upperRight = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, distance));
+            
+            // Clamp the mouse position.
+            float clampedX = Mathf.Clamp(mousePosition.x, lowerLeft.x, upperRight.x);
+            float clampedY = Mathf.Clamp(mousePosition.y, lowerLeft.y, upperRight.y);
+            Vector3 clampedPosition = new Vector3(clampedX, clampedY, 0);
+            
+            // Move the object toward the clamped mouse position.
+            transform.position = Vector3.MoveTowards(transform.position, clampedPosition, 0.5f);
         }
     }
 
-    // Called when the mouse is clicked on the object
     public void OnPointerDown(PointerEventData eventData)
     {
         isMouseDragging = true;
     }
 
-    // Called when the mouse button is released
     public void OnPointerUp(PointerEventData eventData)
     {
         isMouseDragging = false;
