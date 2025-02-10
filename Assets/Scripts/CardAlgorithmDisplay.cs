@@ -21,28 +21,48 @@ public class CardAlgorithmDisplay : MonoBehaviour
         Shuffle(typeC);
         Shuffle(typeD);
 
-        // Form sets. Each set ensures one card of each type, but the order is randomized.
+        // Determine how many sets to form (based on the count in each type).
         int numSets = typeA.Count;
         List<string> sets = new List<string>();
 
         for (int i = 0; i < numSets; i++)
         {
-            // Create a temporary list with one card of each type.
+            // Start with the base 4 cards (one of each type).
             List<string> setCards = new List<string>() { typeA[i], typeB[i], typeC[i], typeD[i] };
-            // Shuffle the order of cards within the set.
+            
+            // Choose 2 extra cards randomly from among the 4 types.
+            List<int> extraIndices = new List<int>() { 0, 1, 2, 3 };
+            Shuffle(extraIndices);
+
+            // For each extra card, based on the random type chosen.
+            int extraChoice1 = extraIndices[0];
+            int extraChoice2 = extraIndices[1];
+            // extra card depending on the chosen type index.
+            if (extraChoice1 == 0) setCards.Add(typeA[i]);
+            else if (extraChoice1 == 1) setCards.Add(typeB[i]);
+            else if (extraChoice1 == 2) setCards.Add(typeC[i]);
+            else if (extraChoice1 == 3) setCards.Add(typeD[i]);
+
+            if (extraChoice2 == 0) setCards.Add(typeA[i]);
+            else if (extraChoice2 == 1) setCards.Add(typeB[i]);
+            else if (extraChoice2 == 2) setCards.Add(typeC[i]);
+            else if (extraChoice2 == 3) setCards.Add(typeD[i]);
+
+            // Now shuffle the whole 6-card set.
             Shuffle(setCards);
-            // Join the shuffled cards separated by commas.
+
+            // Join the shuffled cards with commas.
             string setStr = string.Join(",", setCards.ToArray());
             sets.Add(setStr);
         }
 
-        // Shuffle the sets.
+        // Shuffle the sets themselves.
         Shuffle(sets);
 
-        // Combine sets into a display string, separated by " , ".
+        // Combine sets into a final display string, separated by " , ".
         string finalOutput = string.Join(" , ", sets.ToArray());
 
-        // Display on UI TextMeshPro component.
+        // Display on the TextMeshPro component.
         if (displayText != null)
         {
             displayText.text = finalOutput;
