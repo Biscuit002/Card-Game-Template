@@ -1,13 +1,16 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private bool isMouseDragging;
+    public GameObject SnapTarget;
 
     void Start()
     {
         isMouseDragging = false;
+        SnapTarget = GameObject.Find("SnapTarget");
     }
 
     void Update()
@@ -33,6 +36,19 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             
             // Move the object toward the clamped mouse position.
             transform.position = Vector3.MoveTowards(transform.position, clampedPosition, 0.5f);
+        }
+        if (!isMouseDragging)
+        {
+            // Snap the card back to its original position.
+            transform.position = Vector3.MoveTowards(transform.position, SnapTarget.transform.position, 0.5f);
+        }
+    }
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        // If the card collides with another card, snap back to the original position.
+        if (other.gameObject.CompareTag("Snaptarget"))
+        {
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, 0, 0), 0.5f);
         }
     }
 
