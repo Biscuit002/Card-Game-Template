@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -40,7 +39,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (!isMouseDragging)
         {
             // Snap the card back to its original position.
-            transform.position = Vector3.MoveTowards(transform.position, SnapTarget.transform.position, 0.5f);
+            //transform.position = Vector3.MoveTowards(transform.position, SnapTarget.transform.position, 0.5f);
         }
     }
     void OnTriggerEnter2D(Collider2D other)
@@ -51,7 +50,6 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, 0, 0), 0.5f);
         }
     }
-
     public void OnPointerDown(PointerEventData eventData)
     {
         isMouseDragging = true;
