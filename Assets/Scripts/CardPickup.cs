@@ -39,7 +39,10 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (!isMouseDragging)
         {
             // Snap the card back to its original position.
-            //transform.position = Vector3.MoveTowards(transform.position, SnapTarget.transform.position, 0.5f);
+            if (Vector2.Distance(transform.position, SnapTarget.transform.position) < 2) 
+            {
+                transform.position = Vector3.MoveTowards(transform.position, SnapTarget.transform.position, 0.5f);
+            }
         }
     }
     void OnTriggerEnter2D(Collider2D other)
@@ -47,7 +50,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         // If the card collides with another card, snap back to the original position.
         if (other.gameObject.CompareTag("Snaptarget"))
         {
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, 0, 0), 0.5f);
+            transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, 0, 0), 0.9f);
         }
     }
     public void OnPointerDown(PointerEventData eventData)
