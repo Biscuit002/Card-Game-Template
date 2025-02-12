@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -57,6 +58,8 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         isMouseDragging = true;
         //transform.SetAsFirstSibling();
+        //Canvas canvas = GetComponent<Canvas>();
+        //canvas.sortingOrder = 1;
     }
 
     public void OnPointerUp(PointerEventData eventData)
