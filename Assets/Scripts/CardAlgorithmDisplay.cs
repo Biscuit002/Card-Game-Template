@@ -53,8 +53,13 @@ public class CardAlgorithmDisplay : MonoBehaviour
         // Now shuffle the whole 6-card set.
         Shuffle(setCards);
 
-        // Optionally display the set on screen as text.
-        string setStr = string.Join(",", setCards.ToArray());
+        // Convert the labels before display.
+        List<string> displayLabels = new List<string>();
+        foreach (string label in setCards)
+        {
+            displayLabels.Add(ConvertLabel(label.Trim()));
+        }
+        string setStr = string.Join(", ", displayLabels.ToArray());
         if (displayText != null)
         {
             displayText.text = setStr;
@@ -66,7 +71,7 @@ public class CardAlgorithmDisplay : MonoBehaviour
             Destroy(child.gameObject);
         }
         
-        // Spawn each card prefab according to its label, positioning them with a horizontal offset.
+        // Spawn each card prefab according to its original letter, positioning them with a horizontal offset.
         for (int i = 0; i < setCards.Count; i++)
         {
             string label = setCards[i].Trim();
@@ -89,6 +94,20 @@ public class CardAlgorithmDisplay : MonoBehaviour
                 newCard.transform.localPosition = new Vector3(i * 110, 0, 0);
             }
         }
+    }
+
+    // Convert the card label letter to a word.
+    string ConvertLabel(string label)
+    {
+        if (label.StartsWith("a"))
+            return label.Replace("a", "Attack");
+        else if (label.StartsWith("b"))
+            return label.Replace("b", "Passive");
+        else if (label.StartsWith("c"))
+            return label.Replace("c", "Defense");
+        else if (label.StartsWith("d"))
+            return label.Replace("d", "Item");
+        return label;
     }
 
     // Generic Fisher-Yates shuffle.
