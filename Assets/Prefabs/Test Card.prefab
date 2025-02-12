@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1749442783991868216}
-  - component: {fileID: -7764320516234306694}
   - component: {fileID: 709176995797238668}
   - component: {fileID: -2923880200492235351}
   m_Layer: 0
@@ -34,22 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7764320516234306694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7511229394175711812}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 151467f399e634cd5a065dfdea33c4af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cards: []
-  curveHeight: 50
-  cardSpacing: 1.5
-  hoverScale: 1.2
 --- !u!212 &709176995797238668
 SpriteRenderer:
   m_ObjectHideFlags: 0
