@@ -4,10 +4,19 @@ using TMPro;
 
 public class CardAlgorithmDisplay : MonoBehaviour
 {
-    // Assign a TextMeshPro UI component in the Inspector.
+    // Assign a TextMeshPro UI component in the Inspector if you want to display the algorithm text.
     public TMP_Text displayText;
 
-    void Start()
+    // References to the four different color card prefabs.
+    public GameObject cardAPrefab;
+    public GameObject cardBPrefab;
+    public GameObject cardCPrefab;
+    public GameObject cardDPrefab;
+    // Parent transform for spawned cards.
+    public Transform cardParent;
+
+    // Call this method from your Draw button.
+    public void DrawNextSet()
     {
         // Create card lists for each type.
         List<string> typeA = new List<string>() { "a1", "a2", "a3", "a4" };
@@ -21,51 +30,64 @@ public class CardAlgorithmDisplay : MonoBehaviour
         Shuffle(typeC);
         Shuffle(typeD);
 
-        // Determine how many sets to form (based on the count in each type).
-        int numSets = typeA.Count;
-        List<string> sets = new List<string>();
+        // For this draw, pick the first card of each type.
+        List<string> setCards = new List<string>() { typeA[0], typeB[0], typeC[0], typeD[0] };
 
-        for (int i = 0; i < numSets; i++)
-        {
-            // Start with the base 4 cards (one of each type).
-            List<string> setCards = new List<string>() { typeA[i], typeB[i], typeC[i], typeD[i] };
-            
-            // Choose 2 extra cards randomly from among the 4 types.
-            List<int> extraIndices = new List<int>() { 0, 1, 2, 3 };
-            Shuffle(extraIndices);
+        // Choose 2 extra cards randomly from among the 4 types.
+        List<int> extraIndices = new List<int>() { 0, 1, 2, 3 };
+        Shuffle(extraIndices);
 
-            // For each extra card, based on the random type chosen.
-            int extraChoice1 = extraIndices[0];
-            int extraChoice2 = extraIndices[1];
-            // extra card depending on the chosen type index.
-            if (extraChoice1 == 0) setCards.Add(typeA[i]);
-            else if (extraChoice1 == 1) setCards.Add(typeB[i]);
-            else if (extraChoice1 == 2) setCards.Add(typeC[i]);
-            else if (extraChoice1 == 3) setCards.Add(typeD[i]);
+        int extraChoice1 = extraIndices[0];
+        int extraChoice2 = extraIndices[1];
 
-            if (extraChoice2 == 0) setCards.Add(typeA[i]);
-            else if (extraChoice2 == 1) setCards.Add(typeB[i]);
-            else if (extraChoice2 == 2) setCards.Add(typeC[i]);
-            else if (extraChoice2 == 3) setCards.Add(typeD[i]);
+        if (extraChoice1 == 0) setCards.Add(typeA[0]);
+        else if (extraChoice1 == 1) setCards.Add(typeB[0]);
+        else if (extraChoice1 == 2) setCards.Add(typeC[0]);
+        else if (extraChoice1 == 3) setCards.Add(typeD[0]);
 
-            // Now shuffle the whole 6-card set.
-            Shuffle(setCards);
+        if (extraChoice2 == 0) setCards.Add(typeA[0]);
+        else if (extraChoice2 == 1) setCards.Add(typeB[0]);
+        else if (extraChoice2 == 2) setCards.Add(typeC[0]);
+        else if (extraChoice2 == 3) setCards.Add(typeD[0]);
 
-            // Join the shuffled cards with commas.
-            string setStr = string.Join(",", setCards.ToArray());
-            sets.Add(setStr);
-        }
+        // Now shuffle the whole 6-card set.
+        Shuffle(setCards);
 
-        // Shuffle the sets themselves.
-        Shuffle(sets);
-
-        // Combine sets into a final display string, separated by " , ".
-        string finalOutput = string.Join(" , ", sets.ToArray());
-
-        // Display on the TextMeshPro component.
+        // Optionally display the set on screen as text.
+        string setStr = string.Join(",", setCards.ToArray());
         if (displayText != null)
         {
-            displayText.text = finalOutput;
+            displayText.text = setStr;
+        }
+
+        // Clear any existing cards first.
+        foreach (Transform child in cardParent)
+        {
+            Destroy(child.gameObject);
+        }
+        
+        // Spawn each card prefab according to its label, positioning them with a horizontal offset.
+        for (int i = 0; i < setCards.Count; i++)
+        {
+            string label = setCards[i].Trim();
+            GameObject prefabToSpawn = null;
+
+            // Determine which prefab to spawn based on the first letter.
+            if (label.StartsWith("a"))
+                prefabToSpawn = cardAPrefab;
+            else if (label.StartsWith("b"))
+                prefabToSpawn = cardBPrefab;
+            else if (label.StartsWith("c"))
+                prefabToSpawn = cardCPrefab;
+            else if (label.StartsWith("d"))
+                prefabToSpawn = cardDPrefab;
+
+            if (prefabToSpawn != null)
+            {
+                // Instantiate as a child with local positioning.
+                GameObject newCard = Instantiate(prefabToSpawn, cardParent, false);
+                newCard.transform.localPosition = new Vector3(i * 110, 0, 0);
+            }
         }
     }
 
