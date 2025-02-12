@@ -56,6 +56,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         isMouseDragging = true;
+        //transform.SetAsFirstSibling();
     }
 
     public void OnPointerUp(PointerEventData eventData)
