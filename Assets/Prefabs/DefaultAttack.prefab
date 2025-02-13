@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2868111303471339375}
   - component: {fileID: 1364105534205889961}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: DefaultAttack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,8 @@ GameObject:
   - component: {fileID: 2847113013339002991}
   - component: {fileID: 374533006302530813}
   - component: {fileID: 6715254098712800815}
-  m_Layer: 5
+  - component: {fileID: 1409056447938894685}
+  m_Layer: 3
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,6 +128,19 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1409056447938894685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1895329306418495436}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41325b15bc450e14ea7d02013f536958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  power: 1
 --- !u!1 &3255978976281134331
 GameObject:
   m_ObjectHideFlags: 0
@@ -138,7 +152,7 @@ GameObject:
   - component: {fileID: 8526871832281837092}
   - component: {fileID: 4752055191869895324}
   - component: {fileID: 6502390630363587838}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -275,7 +289,7 @@ GameObject:
   - component: {fileID: 7651918178808786821}
   - component: {fileID: 3633309864813726648}
   - component: {fileID: 715769518849496682}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
