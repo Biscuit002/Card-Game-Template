@@ -6,11 +6,16 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private bool isMouseDragging;
     public GameObject SnapTarget;
+    
+    private Canvas canvas;
+    private int originalSortingOrder;
 
     void Start()
     {
         isMouseDragging = false;
         SnapTarget = GameObject.Find("SnapTarget");
+        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+        originalSortingOrder = canvas.sortingOrder;
     }
 
     void Update()
@@ -57,13 +62,12 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         isMouseDragging = true;
-        //transform.SetAsFirstSibling();
-        //Canvas canvas = GetComponent<Canvas>();
-        //canvas.sortingOrder = 1;
+        canvas.sortingOrder = 100;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         isMouseDragging = false;
+        canvas.sortingOrder = originalSortingOrder;
     }
 }
