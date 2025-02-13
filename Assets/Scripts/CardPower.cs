@@ -5,7 +5,7 @@ public class CardPower : MonoBehaviour
 {
     [SerializeField] [Tooltip("The power value of this card")]
     [Range(0, 100)] // Adjust the range as needed for your game
-    private int power = 0;
+    public int power = 0;
     
     public int GetPower()
     {

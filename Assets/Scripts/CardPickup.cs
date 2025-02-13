@@ -6,6 +6,9 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private bool isMouseDragging;
     public GameObject SnapTarget;
+
+    public CardPower cardPower;
+    public int powerValue;
     
     private Canvas canvas;
     private int originalSortingOrder;
@@ -16,6 +19,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         SnapTarget = GameObject.Find("SnapTarget");
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         originalSortingOrder = canvas.sortingOrder;
+        cardPower = GetComponent<CardPower>();
     }
 
     void Update()
@@ -48,6 +52,8 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             if (Vector2.Distance(transform.position, SnapTarget.transform.position) < 2) 
             {
                 transform.position = Vector3.MoveTowards(transform.position, SnapTarget.transform.position, 0.5f);
+                powerValue = cardPower.power;
+                print("Power value: " + powerValue);
             }
         }
     }

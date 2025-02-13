@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2868111303471339375}
   - component: {fileID: 1364105534205889961}
+  - component: {fileID: 2873861197841027102}
   m_Layer: 3
   m_Name: DefaultAttack
   m_TagString: Untagged
@@ -52,6 +53,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SnapTarget: {fileID: 0}
+  cardPower: {fileID: 0}
+  powerValue: 0
+--- !u!114 &2873861197841027102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838700324240328004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41325b15bc450e14ea7d02013f536958, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  power: 5
 --- !u!1 &1895329306418495436
 GameObject:
   m_ObjectHideFlags: 0
