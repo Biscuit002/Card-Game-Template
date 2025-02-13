@@ -1381,7 +1381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayText: {fileID: 1538310572}
-  cardAPrefab: {fileID: 1838700324240328004, guid: 66a0029297fc2419c82f71341ffa3c5d, type: 3}
+  cardAPrefab: {fileID: 1838700324240328004, guid: 2641cf897e66cac478caf5d875fc30aa, type: 3}
   cardBPrefab: {fileID: 1838700324240328004, guid: 06651ce62e0e84a258f018ccbd766497, type: 3}
   cardCPrefab: {fileID: 1838700324240328004, guid: 3e7b90a8754a14675a0c92dee5ce71af, type: 3}
   cardDPrefab: {fileID: 1838700324240328004, guid: c559a9cbe0b5f48058bacfa5a9c72735, type: 3}
