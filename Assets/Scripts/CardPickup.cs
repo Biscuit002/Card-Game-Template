@@ -7,6 +7,8 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private bool isMouseDragging;
     public GameObject SnapTarget;
 
+    public GameObject activeCard;
+
     public CardPower cardPower;
     public int powerValue;
     
@@ -51,9 +53,9 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             // Snap the card back to its original position.
             if (Vector2.Distance(transform.position, SnapTarget.transform.position) < 2) 
             {
+                activeCard = this.gameObject;
                 transform.position = Vector3.MoveTowards(transform.position, SnapTarget.transform.position, 0.5f);
                 powerValue = cardPower.power;
-                print("Power value: " + powerValue);
             }
         }
     }
