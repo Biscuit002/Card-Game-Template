@@ -56,5 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
+    "CC_Cpp.errorSquiggles": "Enabled",
     "dotnet.defaultSolution": "Card-Game-Template.sln"
 }

@@ -15,6 +15,8 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private Canvas canvas;
     private int originalSortingOrder;
 
+    public DisplayPower displayPower;
+
     void Start()
     {
         isMouseDragging = false;
@@ -22,6 +24,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         originalSortingOrder = canvas.sortingOrder;
         cardPower = GetComponent<CardPower>();
+        displayPower = FindObjectOfType<DisplayPower>();
     }
 
     void Update()
@@ -46,26 +49,27 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             Vector3 clampedPosition = new Vector3(clampedX, clampedY, 0);
             
             // Move the object toward the clamped mouse position.
-            transform.position = Vector3.MoveTowards(transform.position, clampedPosition, 0.5f);
+            transform.position = new Vector3(clampedPosition.x, clampedPosition.y, 0);
         }
         if (!isMouseDragging)
         {
             // Snap the card back to its original position.
             if (Vector2.Distance(transform.position, SnapTarget.transform.position) < 2) 
             {
-                activeCard = this.gameObject;
-                transform.position = Vector3.MoveTowards(transform.position, SnapTarget.transform.position, 0.5f);
-                powerValue = cardPower.power;
+                SnapToTarget();
+                UpdateUI();
             }
         }
     }
-    void OnTriggerEnter2D(Collider2D other)
+    public void SnapToTarget() 
     {
-        // If the card collides with another card, snap back to the original position.
-        if (other.gameObject.CompareTag("Snaptarget"))
-        {
-            transform.position = Vector3.MoveTowards(transform.position, new Vector3(0, 0, 0), 0.9f);
-        }
+        activeCard = this.gameObject;
+        transform.position = Vector3.MoveTowards(transform.position, SnapTarget.transform.position, 0.8f);
+        powerValue = cardPower.power;
+    }
+    public void UpdateUI()
+    {
+        displayPower.powerText.text = "POWER: " + powerValue;
     }
     public void OnPointerDown(PointerEventData eventData)
     {
