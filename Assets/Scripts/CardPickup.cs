@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private bool isMouseDragging;
-    public GameObject SnapTarget;
+    public GameObject[] SnapTargets;
     public bool inTarget;
 
     public CardPower cardPower;
@@ -21,7 +21,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     void Start()
     {
         isMouseDragging = false;
-        SnapTarget = GameObject.Find("SnapTarget");
+        SnapTargets = GameObject.FindGameObjectsWithTag("SnapTarget");
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
         originalSortingOrder = canvas.sortingOrder;
         cardPower = GetComponent<CardPower>();
@@ -56,7 +56,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (!isMouseDragging)
         {
             // Snap the card back to its original position.
-            if (Vector2.Distance(transform.position, SnapTarget.transform.position) < 2) 
+            if (Vector2.Distance(transform.position, SnapTargets[0].transform.position) < 2) 
             {
                 inTarget = true;
                 SnapToTarget();
@@ -69,13 +69,17 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void SnapToTarget() 
     {
-        transform.position = Vector3.MoveTowards(transform.position, SnapTarget.transform.position, 0.8f);
+        transform.position = Vector3.MoveTowards(transform.position, SnapTargets[0].transform.position, 0.8f);
         powerValue = cardPower.power;
     }
     public void UpdateUI()
     {
         displayPower.powerText.text = "POWER: " + gameManager.powerSum;
     }
+    public void checkClosestTarget()
+    {
+        
+    } 
     public void OnPointerDown(PointerEventData eventData)
     {
         isMouseDragging = true;
