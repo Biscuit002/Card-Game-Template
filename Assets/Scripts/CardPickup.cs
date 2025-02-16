@@ -6,8 +6,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
     private bool isMouseDragging;
     public GameObject SnapTarget;
-
-    public GameObject activeCard;
+    public bool inTarget;
 
     public CardPower cardPower;
     public int powerValue;
@@ -17,6 +16,8 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public DisplayPower displayPower;
 
+    public GameManager gameManager;
+
     void Start()
     {
         isMouseDragging = false;
@@ -25,6 +26,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         originalSortingOrder = canvas.sortingOrder;
         cardPower = GetComponent<CardPower>();
         displayPower = FindObjectOfType<DisplayPower>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     void Update()
@@ -56,20 +58,23 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             // Snap the card back to its original position.
             if (Vector2.Distance(transform.position, SnapTarget.transform.position) < 2) 
             {
+                inTarget = true;
                 SnapToTarget();
                 UpdateUI();
+            } else 
+            {
+                inTarget = false;
             }
         }
     }
     public void SnapToTarget() 
     {
-        activeCard = this.gameObject;
         transform.position = Vector3.MoveTowards(transform.position, SnapTarget.transform.position, 0.8f);
         powerValue = cardPower.power;
     }
     public void UpdateUI()
     {
-        displayPower.powerText.text = "POWER: " + powerValue;
+        displayPower.powerText.text = "POWER: " + gameManager.powerSum;
     }
     public void OnPointerDown(PointerEventData eventData)
     {
