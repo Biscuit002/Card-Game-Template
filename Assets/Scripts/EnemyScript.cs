@@ -28,7 +28,7 @@ public class EnemyScript : MonoBehaviour
         {
             enemy.localPosition += Vector3.down * gridStep;
         }
-        
+        /
         // 2. Determine how many new enemies to spawn for this wave.
         int spawnCount = Mathf.RoundToInt(baseEnemyCount * (currentWave * spawnMultiplier));
         
