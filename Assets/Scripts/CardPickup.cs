@@ -55,7 +55,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         }
         if (!isMouseDragging)
         {
-            // Snap the card back to its original position.
+            checkClosestTarget();
             if (Vector2.Distance(transform.position, SnapTargets[0].transform.position) < 2) 
             {
                 inTarget = true;
@@ -78,7 +78,13 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     }
     public void checkClosestTarget()
     {
-        
+        for (int i = 0; i < SnapTargets.Length; i++)
+        {
+            if (Vector2.Distance(transform.position, SnapTargets[i].transform.position) < 2)
+            {
+                transform.position = Vector3.MoveTowards(transform.position, SnapTargets[i].transform.position, 0.8f);
+            }
+        }
     } 
     public void OnPointerDown(PointerEventData eventData)
     {
