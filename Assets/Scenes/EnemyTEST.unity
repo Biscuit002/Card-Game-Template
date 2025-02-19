@@ -150,9 +150,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridStep: 2
   baseEnemyCount: 3
-  spawnMultiplier: 1
+  spawnMultiplier: 0.05
   enemyPrefab: {fileID: 3779752867888101339, guid: cc671a54fa98c4a4d9f7fb494c07e5c6, type: 3}
   enemyParent: {fileID: 1401958551}
+  laneSpacing: 3
   currentWave: 1
 --- !u!212 &60785764
 SpriteRenderer:
