@@ -349,7 +349,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 693, y: -425.26}
+  m_AnchoredPosition: {x: 749, y: 0}
   m_SizeDelta: {x: 300.02, y: 127.85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &455779502
@@ -480,7 +480,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -793, y: -434}
+  m_AnchoredPosition: {x: -784, y: 0}
   m_SizeDelta: {x: 257.1, y: 110.36}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &596367034
@@ -821,8 +821,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -0.0024414, y: 556}
-  m_SizeDelta: {x: 1919.9951, y: 1080}
+  m_AnchoredPosition: {x: -0.0024414, y: 168.43}
+  m_SizeDelta: {x: 1920, y: 304.86}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1128196755
 MonoBehaviour:
@@ -978,11 +978,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4059390032333456317, guid: d2f7910fe56b5401c97408ebaff4d386, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -313
+      value: -336
       objectReference: {fileID: 0}
     - target: {fileID: 4059390032333456317, guid: d2f7910fe56b5401c97408ebaff4d386, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -341.77
+      value: -1.6139
       objectReference: {fileID: 0}
     - target: {fileID: 4059390032333456317, guid: d2f7910fe56b5401c97408ebaff4d386, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1196,7 +1196,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -793, y: 437}
+  m_AnchoredPosition: {x: -825, y: 484}
   m_SizeDelta: {x: 109.89, y: 23.965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1538310571
@@ -1254,8 +1254,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
-  m_fontSizeBase: 36
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1292,7 +1292,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: -661.4232, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1539,11 +1539,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4059390032333456317, guid: d2f7910fe56b5401c97408ebaff4d386, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 215
+      value: 340
       objectReference: {fileID: 0}
     - target: {fileID: 4059390032333456317, guid: d2f7910fe56b5401c97408ebaff4d386, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -345
+      value: -1.6139
       objectReference: {fileID: 0}
     - target: {fileID: 4059390032333456317, guid: d2f7910fe56b5401c97408ebaff4d386, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
