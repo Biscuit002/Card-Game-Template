@@ -898,7 +898,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3211016199559084479, guid: d2f7910fe56b5401c97408ebaff4d386, type: 3}
       propertyPath: m_Name
-      value: SnapTarget
+      value: SnapTarget1
       objectReference: {fileID: 0}
     - target: {fileID: 3211016199559084479, guid: d2f7910fe56b5401c97408ebaff4d386, type: 3}
       propertyPath: m_TagString
