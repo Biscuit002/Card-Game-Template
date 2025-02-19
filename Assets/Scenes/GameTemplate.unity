@@ -275,7 +275,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eaaecd379e9844479743ff35e70e1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SnapTarget: {fileID: 0}
+  SnapTargets: []
+  inTarget: 0
+  cardPower: {fileID: 0}
+  powerValue: 0
+  displayPower: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!61 &347555337
 BoxCollider2D:
   m_ObjectHideFlags: 0
