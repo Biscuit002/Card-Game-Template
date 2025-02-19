@@ -1,4 +1,4 @@
-using UnityEngine;
+/*using UnityEngine;
 using TMPro;
 
 public class CardSlot : MonoBehaviour
@@ -59,11 +59,4 @@ public class CardSlot : MonoBehaviour
             powerText.text = power.ToString();
         }
     }
-
-    // Optional: visualize the detection radius in the editor
-    private void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, detectionRadius);
-    }
-}
+}*/
