@@ -15,8 +15,12 @@ public class EnemyScript : MonoBehaviour
     // Parent transform under which all enemy instances reside.
     public Transform enemyParent;
     
-    // New: Horizontal spacing between lanes.
+    // Horizontal spacing between lanes.
     public float laneSpacing = 200f;
+    
+    // Starting positions for spawning new enemies.
+    public float spawnStartX = 0f;
+    public float spawnStartY = 0f;
     
     // Track current wave number.
     public int currentWave = 1;
@@ -40,33 +44,29 @@ public class EnemyScript : MonoBehaviour
         // 2. Determine how many new enemies to spawn for this wave.
         int spawnCount = Mathf.RoundToInt(baseEnemyCount * (currentWave * spawnMultiplier));
         
-        // 3. Set a spawnY for new enemies (top row).
-        float spawnY = 0f;
-        
-        // 4. Spawn new enemies into 3 random lanes.
+        // 3. Spawn new enemies into random lanes.
         for (int i = 0; i < spawnCount; i++)
         {
             // Randomly choose a lane (0: left, 1: center, 2: right).
             int lane = Random.Range(0, 3);
-            float laneX = 0f;
+            float laneOffsetX = 0f;
             if (lane == 0)
-                laneX = -laneSpacing;
+                laneOffsetX = -laneSpacing;
             else if (lane == 1)
-                laneX = 0f;
+                laneOffsetX = 0f;
             else if (lane == 2)
-                laneX = laneSpacing;
+                laneOffsetX = laneSpacing;
             
-            Vector3 spawnPos = new Vector3(laneX, spawnY, 0);
+            // Use the adjustable spawnStartX and spawnStartY for the base spawn position.
+            Vector3 spawnPos = new Vector3(spawnStartX + laneOffsetX, spawnStartY, 0);
             GameObject newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity, enemyParent);
             
-            // Optional: Ensure the spawned enemy drifts—attach the EnemyDrift component if not present.
+            // Optionally attach the EnemyDrift component if not already present.
             if(newEnemy.GetComponent<EnemyDrift>() == null)
-            {
                 newEnemy.AddComponent<EnemyDrift>();
-            }
         }
         
-        // 5. Increment the current wave.
+        // 4. Increment the current wave.
         currentWave++;
     }
 }
