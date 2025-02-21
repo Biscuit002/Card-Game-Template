@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1364105534205889961}
   - component: {fileID: 3237723244851038203}
   - component: {fileID: -515524995871080914}
+  - component: {fileID: -2788496632691758235}
   m_Layer: 3
   m_Name: DefaultDefense
   m_TagString: Untagged
@@ -86,6 +87,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationAmplitude: 2
   rotationSpeed: 1
+--- !u!114 &-2788496632691758235
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1838700324240328004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e58572506d411413497b10ad7c208f7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handAreaPanel: {fileID: 0}
 --- !u!1 &1895329306418495436
 GameObject:
   m_ObjectHideFlags: 0
