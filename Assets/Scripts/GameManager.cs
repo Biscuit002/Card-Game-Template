@@ -44,8 +44,8 @@ public class GameManager : MonoBehaviour
             if (cardObjects[i].inTarget)
             {
                 powerSum = cardPickup.displayPower.powerText.text;
-                powerSum = "POWER: " + cardObjects[i].powerValue;
-                print(cardObjects[i].powerValue);
+                print(powerSum);
+                //powerSum = cardObjects[i].powerValue;
             }
         }
     }

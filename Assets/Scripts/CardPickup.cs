@@ -17,7 +17,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public DisplayPower displayPower;
 
     public GameManager gameManager;
-    [SerializeField] private int snapTargetListValue;
+    public  int snapTargetListValue;
 
     void Start()
     {
@@ -28,6 +28,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         cardPower = GetComponent<CardPower>();
         displayPower = FindObjectOfType<DisplayPower>();
         gameManager = FindObjectOfType<GameManager>();
+        snapTargetListValue = 0;
     }
 
     void Update()
