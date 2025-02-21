@@ -17,9 +17,11 @@ public class CardManager : MonoBehaviour
     private void Start()
     {
         // Initialize deck with cards
-        for(int i = 0; i < 30; i++)
+        for (int i = 0; i < 6; i++)
         {
-            deck.Add(cardPrefab);
+            // Deal card...
+            hand.Add(cardPrefab);
+            deck.RemoveAt(deck.Count - 1);
         }
         
         drawButton.onClick.AddListener(DrawCard);
