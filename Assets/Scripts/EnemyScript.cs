@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class EnemyScript : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class EnemyScript : MonoBehaviour
     // Starting positions for spawning new enemies.
     public float spawnStartX = 0f;
     public float spawnStartY = 0f;
+    
+    // TMP_Text to display the current wave.
+    public TMP_Text waveText;
     
     // Track current wave number.
     public int currentWave = 1;
@@ -68,5 +72,11 @@ public class EnemyScript : MonoBehaviour
         
         // 4. Increment the current wave.
         currentWave++;
+        
+        // 5. Update the wave display text.
+        if (waveText != null)
+        {
+            waveText.text = "Wave: " + currentWave;
+        }
     }
 }
