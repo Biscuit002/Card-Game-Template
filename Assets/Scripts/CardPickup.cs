@@ -35,7 +35,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         {
             Vector3 mousePosition = Input.mousePosition;
             
-            // Calculate distance from camera to the card along z-axis.
+            // Calculated distance from camera to the card along z-axis.
             float distance = Mathf.Abs(Camera.main.transform.position.z - transform.position.z);
             // Convert mouse position to world coordinates at the card's distance.
             mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, distance));
@@ -56,10 +56,10 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (!isMouseDragging)
         {
             checkClosestTarget();
-            if (Vector2.Distance(transform.position, SnapTargets[0].transform.position) < 2) 
+            if (Vector2.Distance(transform.position, SnapTargets[0].transform.position) < 1) 
             {
                 inTarget = true;
-                SnapToTarget();
+                //SnapToTarget();
                 UpdateUI();
             } else 
             {
@@ -80,7 +80,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     {
         for (int i = 0; i < SnapTargets.Length; i++)
         {
-            if (Vector2.Distance(transform.position, SnapTargets[i].transform.position) < 2)
+            if (Vector2.Distance(transform.position, SnapTargets[i].transform.position) < 1)
             {
                 transform.position = Vector3.MoveTowards(transform.position, SnapTargets[i].transform.position, 0.8f);
             }

@@ -37,19 +37,19 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        powerSum = 0;
         cardObjects = FindObjectsOfType<CardPickup>();
         for (int i = 0; i < cardObjects.Length; i++)
         {
             cardPickup = cardObjects[i];
             if (cardObjects[i].inTarget)
             {
-                powerSum += cardObjects[i].powerValue;
+                cardPickup.displayPower.powerText.text = "POWER: " + cardObjects[i].powerValue;
+                print(cardPickup.displayPower.powerText.text);
             }
         }
         if (cardPickup != null)
         {
-            cardPickup.displayPower.powerText.text = "POWER: " + powerSum;
+            
         }
     }
 
