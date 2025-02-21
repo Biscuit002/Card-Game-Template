@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public CardPickup[] cardObjects;
     private CardPickup cardPickup;
-    public int powerSum;
+    public string powerSum;
 
     /*public static GameManager gm;
     public List<Card> deck = new List<Card>();
@@ -43,13 +43,10 @@ public class GameManager : MonoBehaviour
             cardPickup = cardObjects[i];
             if (cardObjects[i].inTarget)
             {
-                cardPickup.displayPower.powerText.text = "POWER: " + cardObjects[i].powerValue;
-                print(cardPickup.displayPower.powerText.text);
+                powerSum = cardPickup.displayPower.powerText.text;
+                powerSum = "POWER: " + cardObjects[i].powerValue;
+                print(cardObjects[i].powerValue);
             }
-        }
-        if (cardPickup != null)
-        {
-            
         }
     }
 

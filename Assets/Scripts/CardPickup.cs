@@ -17,6 +17,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public DisplayPower displayPower;
 
     public GameManager gameManager;
+    [SerializeField] private int snapTargetListValue;
 
     void Start()
     {
@@ -56,25 +57,14 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         if (!isMouseDragging)
         {
             checkClosestTarget();
-            if (Vector2.Distance(transform.position, SnapTargets[0].transform.position) < 1) 
+            if (Vector2.Distance(transform.position, SnapTargets[snapTargetListValue].transform.position) < 1) 
             {
                 inTarget = true;
-                //SnapToTarget();
-                UpdateUI();
             } else 
             {
                 inTarget = false;
             }
         }
-    }
-    public void SnapToTarget() 
-    {
-        transform.position = Vector3.MoveTowards(transform.position, SnapTargets[0].transform.position, 0.8f);
-        powerValue = cardPower.power;
-    }
-    public void UpdateUI()
-    {
-        displayPower.powerText.text = "POWER: " + gameManager.powerSum;
     }
     public void checkClosestTarget()
     {
@@ -83,6 +73,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             if (Vector2.Distance(transform.position, SnapTargets[i].transform.position) < 1)
             {
                 transform.position = Vector3.MoveTowards(transform.position, SnapTargets[i].transform.position, 0.8f);
+                displayPower.powerText.text = "POWER: " + gameManager.powerSum;
             }
         }
     } 
