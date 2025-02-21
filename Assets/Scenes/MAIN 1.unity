@@ -249,6 +249,7 @@ GameObject:
   - component: {fileID: 232948064}
   - component: {fileID: 232948063}
   - component: {fileID: 232948062}
+  - component: {fileID: 232948066}
   m_Layer: 5
   m_Name: ButtonDiscard
   m_TagString: Untagged
@@ -358,6 +359,22 @@ RectTransform:
   m_AnchoredPosition: {x: -512, y: -145.54}
   m_SizeDelta: {x: 230.9, y: 77.16}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &232948066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232948061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6de67ab0c4e4018b6a8a452c97b71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  driftAmplitude: 5
+  driftSpeed: 1
+  rotationAmplitude: 2
+  rotationSpeed: 1
 --- !u!1001 &240080246
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -716,6 +733,7 @@ GameObject:
   - component: {fileID: 500351253}
   - component: {fileID: 500351252}
   - component: {fileID: 500351251}
+  - component: {fileID: 500351254}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -837,6 +855,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500351249}
   m_CullTransparentMesh: 1
+--- !u!114 &500351254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500351249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6de67ab0c4e4018b6a8a452c97b71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  driftAmplitude: 5
+  driftSpeed: 1
+  rotationAmplitude: 2
+  rotationSpeed: 1
 --- !u!1 &596367032
 GameObject:
   m_ObjectHideFlags: 0
@@ -849,6 +883,7 @@ GameObject:
   - component: {fileID: 596367035}
   - component: {fileID: 596367034}
   - component: {fileID: 596367036}
+  - component: {fileID: 596367037}
   m_Layer: 5
   m_Name: ButtonDraw
   m_TagString: Untagged
@@ -970,6 +1005,22 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &596367037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 596367032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3b6de67ab0c4e4018b6a8a452c97b71e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  driftAmplitude: 5
+  driftSpeed: 1
+  rotationAmplitude: 2
+  rotationSpeed: 1
 --- !u!1 &624494161
 GameObject:
   m_ObjectHideFlags: 0
