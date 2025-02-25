@@ -746,8 +746,8 @@ GameObject:
   - component: {fileID: 500351253}
   - component: {fileID: 500351252}
   - component: {fileID: 500351251}
-  - component: {fileID: 500351254}
   - component: {fileID: 500351255}
+  - component: {fileID: 500351256}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -869,22 +869,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500351249}
   m_CullTransparentMesh: 1
---- !u!114 &500351254
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 500351249}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b6de67ab0c4e4018b6a8a452c97b71e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  driftAmplitude: 5
-  driftSpeed: 1
-  rotationAmplitude: 2
-  rotationSpeed: 1
 --- !u!114 &500351255
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -903,6 +887,20 @@ MonoBehaviour:
   cardSlotsFirstRow: {fileID: 1662961565}
   enemyParent: {fileID: 1767959614}
   lerpSpeed: 0.75
+--- !u!114 &500351256
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 500351249}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c517cc3a4b754d68a73e61a40d07007, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationAmplitude: 2
+  rotationSpeed: 1
 --- !u!1 &596367032
 GameObject:
   m_ObjectHideFlags: 0
