@@ -1,24 +1,18 @@
-/*using UnityEngine;
+using UnityEngine;
 using TMPro;
 
 public class CardSlot : MonoBehaviour
 {
     [SerializeField] private float detectionRadius = 0.5f;
     [SerializeField] private TextMeshPro powerText;
-    [SerializeField] [Tooltip("Set this to the Card layer only")] 
-    private LayerMask cardLayer;
+    [SerializeField] private LayerMask cardLayer;
 
-    private Card currentCard;
-    private CardPower currentCardPower;
-    private int currentPower;
-
-    void Start()
+    void Awake()
     {
-        if (powerText == null)
-        {
-            powerText = GetComponentInChildren<TextMeshPro>();
-        }
-        UpdatePowerDisplay(0);
+        // Set this object to layer 6 (CardSlot)
+        gameObject.layer = 6;
+        // Set cardLayer to detect only layer 3 (Card)
+        cardLayer = 1 << 3;
     }
 
     void Update()
@@ -26,30 +20,47 @@ public class CardSlot : MonoBehaviour
         CheckForCard();
     }
 
+    private CardDragHandler currentCard;
+    private CardPower currentCardPower;
+    private int currentPower;
+
     private void CheckForCard()
     {
         Collider2D cardCollider = Physics2D.OverlapCircle(transform.position, detectionRadius, cardLayer);
         
         if (cardCollider != null)
         {
-            CardPower cardPower = cardCollider.GetComponent<CardPower>();
-            if (cardPower != null && cardPower != currentCardPower)
+            var dragHandler = cardCollider.GetComponent<CardDragHandler>();
+            var cardPower = cardCollider.GetComponent<CardPower>();
+            
+            if (dragHandler != null && cardPower != null && cardPower != currentCardPower)
             {
-                // New card with power detected
-                currentCardPower = cardPower;
-                currentCard = cardCollider.GetComponent<Card>();
-                currentPower = cardPower.GetPower();
-                UpdatePowerDisplay(currentPower);
+                AttachCard(dragHandler, cardPower);
             }
         }
-        else if (currentCardPower != null)
+        else if (currentCard != null)
         {
-            // Card removed
-            currentCardPower = null;
-            currentCard = null;
-            currentPower = 0;
-            UpdatePowerDisplay(currentPower);
+            ClearSlot();
         }
+    }
+
+    private void AttachCard(CardDragHandler dragHandler, CardPower cardPower)
+    {
+        currentCard = dragHandler;
+        currentCardPower = cardPower;
+        currentPower = cardPower.GetPower();
+        
+        dragHandler.transform.SetParent(transform);
+        dragHandler.transform.position = transform.position;
+        UpdatePowerDisplay(currentPower);
+    }
+
+    private void ClearSlot()
+    {
+        currentCard = null;
+        currentCardPower = null;
+        currentPower = 0;
+        UpdatePowerDisplay(currentPower);
     }
 
     private void UpdatePowerDisplay(int power)
@@ -59,4 +70,4 @@ public class CardSlot : MonoBehaviour
             powerText.text = power.ToString();
         }
     }
-}*/
+}

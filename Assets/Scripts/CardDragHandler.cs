@@ -1,51 +1,71 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class CardDragHandler : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public RectTransform handAreaPanel;
-
-    private Canvas canvas;
+    private Vector3 originalPosition;
     private Transform originalParent;
-    private Vector2 offset;
+    private SplayHand splayHand;
+    private bool isDragging = false;
+    private Vector3 offset;
+    private Camera mainCamera;
 
-    void Start()
+    private void Start()
     {
-        canvas = GetComponentInParent<Canvas>();
+        mainCamera = Camera.main;
+        splayHand = GetComponentInParent<SplayHand>();
+        StoreOriginalPosition();
+    }
+
+    private void StoreOriginalPosition()
+    {
+        originalPosition = transform.position;
         originalParent = transform.parent;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            (RectTransform)transform, eventData.position, eventData.pressEventCamera, out offset);
-
-        // Reparent to the canvas for proper overlaying.
-        transform.SetParent(canvas.transform, true);
+        isDragging = true;
+        StoreOriginalPosition();
+        offset = transform.position - GetMouseWorldPosition();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if(RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            canvas.transform as RectTransform, eventData.position, eventData.pressEventCamera, out Vector2 localPoint))
+        if (isDragging)
         {
-            transform.localPosition = localPoint - offset;
+            transform.position = GetMouseWorldPosition() + offset;
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        // Check if the card's screen position is inside the hand panel.
-        if(handAreaPanel != null && RectTransformUtility.RectangleContainsScreenPoint(handAreaPanel, Input.mousePosition, eventData.pressEventCamera))
+        isDragging = false;
+        
+        // Check if card is in any slot
+        Collider2D[] slots = Physics2D.OverlapCircleAll(transform.position, 0.5f, LayerMask.GetMask("CardSlot"));
+        
+        if (slots.Length == 0)
         {
-            // Reparent the card back to the hand panel.
-            transform.SetParent(handAreaPanel, true);
+            ReturnToHand();
         }
-        else
+    }
+
+    private void ReturnToHand()
+    {
+        transform.SetParent(originalParent);
+        transform.position = originalPosition;
+        if (splayHand != null)
         {
-            // Instead of detaching completely, reparent it to the canvas to keep it visible.
-            transform.SetParent(canvas.transform, true);
+            // Use AddCard instead of ArrangeCards
+            splayHand.AddCard(gameObject);
         }
+    }
+
+    private Vector3 GetMouseWorldPosition()
+    {
+        Vector3 mousePoint = Input.mousePosition;
+        mousePoint.z = -mainCamera.transform.position.z;
+        return mainCamera.ScreenToWorldPoint(mousePoint);
     }
 }

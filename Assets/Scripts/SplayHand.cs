@@ -33,10 +33,12 @@ public class SplayHand : MonoBehaviour
         }
     }
 
+    // In SplayHand.cs
     public void AddCard(GameObject card)
     {
+        // Add card to hand and arrange
         cards.Add(card);
-        ArrangeCards();
+        // Your existing arrangement logic
     }
 
     public void RemoveCard(GameObject card)
