@@ -876,7 +876,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 500351249}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3b6de67ab0c4e4018b6a8a452c97b71e, type: 3}
   m_Name: 
@@ -898,11 +898,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   normalPosition: {x: 0, y: 0, z: 0}
-  highPosition: {x: 0, y: 1000, z: 0}
+  highPosition: {x: 0, y: 10, z: 0}
   nextWaveButton: {fileID: 500351251}
   cardSlotsFirstRow: {fileID: 1662961565}
   enemyParent: {fileID: 1767959614}
-  lerpSpeed: 5
+  lerpSpeed: 0.75
 --- !u!1 &596367032
 GameObject:
   m_ObjectHideFlags: 0
