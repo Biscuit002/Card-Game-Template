@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
+using TMPro;
 
 public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
@@ -10,14 +10,15 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     public CardPower cardPower;
     public int powerValue;
-    
+
     private Canvas canvas;
     private int originalSortingOrder;
 
     public DisplayPower displayPower;
-
     public GameManager gameManager;
-    public  int snapTargetListValue;
+    
+    private float smallestDistance;
+    private GameObject closestTarget; // Track the closest SnapTarget
 
     void Start()
     {
@@ -28,56 +29,61 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         cardPower = GetComponent<CardPower>();
         displayPower = FindObjectOfType<DisplayPower>();
         gameManager = FindObjectOfType<GameManager>();
-        snapTargetListValue = 0;
     }
 
     void Update()
     {
+        powerValue = cardPower.GetPower();
+        
         if (isMouseDragging)
         {
             Vector3 mousePosition = Input.mousePosition;
-            
-            // Calculated distance from camera to the card along z-axis.
             float distance = Mathf.Abs(Camera.main.transform.position.z - transform.position.z);
-            // Convert mouse position to world coordinates at the card's distance.
             mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, distance));
-            mousePosition.z = 0; // Lock z
-            
-            // Calculate screen boundaries in world space at the card's depth.
+            mousePosition.z = 0;
+
             Vector3 lowerLeft = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, distance));
             Vector3 upperRight = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, distance));
-            
-            // Clamp the mouse position.
+
             float clampedX = Mathf.Clamp(mousePosition.x, lowerLeft.x, upperRight.x);
             float clampedY = Mathf.Clamp(mousePosition.y, lowerLeft.y, upperRight.y);
-            Vector3 clampedPosition = new Vector3(clampedX, clampedY, 0);
-            
-            // Move the object toward the clamped mouse position.
-            transform.position = new Vector3(clampedPosition.x, clampedPosition.y, 0);
+            transform.position = new Vector3(clampedX, clampedY, 0);
         }
-        if (!isMouseDragging)
+        else
         {
             checkClosestTarget();
-            if (Vector2.Distance(transform.position, SnapTargets[snapTargetListValue].transform.position) < 1) 
-            {
-                inTarget = true;
-            } else 
-            {
-                inTarget = false;
-            }
         }
     }
-    public void checkClosestTarget()
+
+    void checkClosestTarget()
     {
-        for (int i = 0; i < SnapTargets.Length; i++)
+        smallestDistance = float.MaxValue;
+        closestTarget = null;
+
+        foreach (var target in SnapTargets)
         {
-            if (Vector2.Distance(transform.position, SnapTargets[i].transform.position) < 1)
+            float currentDistance = Vector2.Distance(transform.position, target.transform.position);
+            if (currentDistance < smallestDistance)
             {
-                transform.position = Vector3.MoveTowards(transform.position, SnapTargets[i].transform.position, 0.8f);
-                displayPower.powerText.text = "POWER: " + gameManager.powerSum;
+                smallestDistance = currentDistance;
+                closestTarget = target;
             }
         }
-    } 
+
+        if (closestTarget != null && smallestDistance < 1f)
+        {
+            inTarget = true;
+            transform.position = Vector3.MoveTowards(transform.position, closestTarget.transform.position, 0.8f);
+
+            // Update the specific SnapTarget with this card's power value
+            gameManager.UpdateSnapTargetPower(closestTarget, powerValue);
+        }
+        else
+        {
+            inTarget = false;
+        }
+    }
+
     public void OnPointerDown(PointerEventData eventData)
     {
         isMouseDragging = true;

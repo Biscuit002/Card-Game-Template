@@ -197,7 +197,6 @@ MonoBehaviour:
   powerValue: 0
   displayPower: {fileID: 0}
   gameManager: {fileID: 0}
-  snapTargetListValue: 0
 --- !u!114 &8653926038124630406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41325b15bc450e14ea7d02013f536958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  power: 2
+  power: 6
 --- !u!114 &6212800864382764572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -237,7 +236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58572506d411413497b10ad7c208f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handAreaPanel: {fileID: 0}
 --- !u!61 &-2841942115574164736
 BoxCollider2D:
   m_ObjectHideFlags: 0

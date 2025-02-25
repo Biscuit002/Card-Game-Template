@@ -1,68 +1,24 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public CardPickup[] cardObjects;
-    private CardPickup cardPickup;
-    public string powerSum;
+    private Dictionary<GameObject, int> snapTargetPowers = new Dictionary<GameObject, int>();
 
-    /*public static GameManager gm;
-    public List<Card> deck = new List<Card>();
-    public List<Card> player_deck = new List<Card>();
-    public List<Card> ai_deck = new List<Card>();
-    public List<Card> player_hand = new List<Card>();
-    public List<Card> ai_hand = new List<Card>();
-    public List<Card> discard_pile = new List<Card>();
-
-    private void Awake()
+    public void UpdateSnapTargetPower(GameObject snapTarget, int powerValue)
     {
-        if (gm != null && gm != this)
+        if (snapTarget != null)
         {
-            Destroy(gameObject);
-        }
-        else
-        {
-            gm = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-    }*/
-    // Start is called before the first frame update
-    void Start()
-    {
-    
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        cardObjects = FindObjectsOfType<CardPickup>();
-        for (int i = 0; i < cardObjects.Length; i++)
-        {
-            cardPickup = cardObjects[i];
-            if (cardObjects[i].inTarget)
+            // Update or add the power value for the specific SnapTarget
+            snapTargetPowers[snapTarget] = powerValue;
+            
+            // Find the TextMeshPro component in this SnapTarget and update the text
+            TextMeshProUGUI textComponent = snapTarget.GetComponentInChildren<TextMeshProUGUI>();
+            if (textComponent != null)
             {
-                powerSum = cardPickup.displayPower.powerText.text;
-                print(powerSum);
-                //powerSum = cardObjects[i].powerValue;
+                textComponent.text = "POWER: " + powerValue.ToString();
             }
         }
     }
-
-    void Deal()
-    {
-
-    }
-
-    void Shuffle()
-    {
-
-    }
-
-    void AI_Turn()
-    {
-
-    }
-
 }
