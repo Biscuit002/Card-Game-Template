@@ -13,6 +13,15 @@ public class CardSlot : MonoBehaviour
         gameObject.layer = 6;
         // Set cardLayer to detect only layer 3 (Card)
         cardLayer = 1 << 3;
+
+        // Set both SnapTarget and combat role tags
+        gameObject.tag = "SnapTarget";
+        
+        // Add combat role tags as secondary tags using GameObject.AddComponent
+        GameObject combatTagObject = new GameObject();
+        combatTagObject.transform.parent = transform;
+        combatTagObject.name = isDefenseSlot ? "DefenseSlot" : "AttackSlot";
+        combatTagObject.tag = isDefenseSlot ? "DefenseSlot" : "AttackSlot";
     }
 
     void Update()
@@ -23,6 +32,9 @@ public class CardSlot : MonoBehaviour
     private CardDragHandler currentCard;
     private CardPower currentCardPower;
     private int currentPower;
+
+    public bool HasCard => currentCard != null;
+    [SerializeField] private bool isDefenseSlot = false;
 
     private void CheckForCard()
     {
@@ -68,6 +80,21 @@ public class CardSlot : MonoBehaviour
         if (powerText != null)
         {
             powerText.text = power.ToString();
+        }
+    }
+
+    public int GetCurrentPower()
+    {
+        return currentPower;
+    }
+
+    public void RegeneratePower(float multiplier)
+    {
+        if (currentCardPower != null)
+        {
+            int regenerationAmount = Mathf.RoundToInt(currentCardPower.GetPower() * multiplier);
+            currentPower = Mathf.Min(currentPower + regenerationAmount, currentCardPower.GetPower());
+            UpdatePowerDisplay(currentPower);
         }
     }
 }

@@ -6,6 +6,8 @@ TagManager:
   tags:
   - SnapTarget
   - Snaptarget
+  - AttackSlot
+  - DefenseSlot
   layers:
   - Default
   - TransparentFX

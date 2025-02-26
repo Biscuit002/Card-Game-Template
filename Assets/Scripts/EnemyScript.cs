@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using CombatSystem;  // Add this line
 
 public class EnemyScript : MonoBehaviour
 {
@@ -29,6 +30,9 @@ public class EnemyScript : MonoBehaviour
     // Track current wave number.
     public int currentWave = 1;
     
+    // Add this property
+    [SerializeField] private float combatTriggerY = -300f; // Y position that triggers combat
+    
     // NextWave is called from a UI button.
     // It moves each existing enemy down one grid slot and spawns new enemies at the top in 3 random lanes.
     public void NextWave()
@@ -45,38 +49,65 @@ public class EnemyScript : MonoBehaviour
             }
         }
         
-        // 2. Determine how many new enemies to spawn for this wave.
-        int spawnCount = Mathf.RoundToInt(baseEnemyCount * (currentWave * spawnMultiplier));
-        
-        // 3. Spawn new enemies into random lanes.
-        for (int i = 0; i < spawnCount; i++)
+        // Check if any enemies are at or below the combat trigger position
+        bool shouldTriggerCombat = false;
+        foreach (Transform enemy in enemyParent)
         {
-            // Randomly choose a lane (0: left, 1: center, 2: right).
-            int lane = Random.Range(0, 3);
-            float laneOffsetX = 0f;
-            if (lane == 0)
-                laneOffsetX = -laneSpacing;
-            else if (lane == 1)
-                laneOffsetX = 0f;
-            else if (lane == 2)
-                laneOffsetX = laneSpacing;
-            
-            // Use the adjustable spawnStartX and spawnStartY for the base spawn position.
-            Vector3 spawnPos = new Vector3(spawnStartX + laneOffsetX, spawnStartY, 0);
-            GameObject newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity, enemyParent);
-            
-            // Optionally attach the EnemyDrift component if not already present.
-            if(newEnemy.GetComponent<EnemyDrift>() == null)
-                newEnemy.AddComponent<EnemyDrift>();
+            if (enemy.localPosition.y <= combatTriggerY)
+            {
+                shouldTriggerCombat = true;
+                break;
+            }
         }
-        
-        // 4. Increment the current wave.
-        currentWave++;
-        
-        // 5. Update the wave display text.
-        if (waveText != null)
+
+        if (shouldTriggerCombat)
         {
-            waveText.text = "Wave: " + currentWave;
+            CombatManager.Instance.StartCombatPhase();
         }
+        else
+        {
+            // 2. Determine how many new enemies to spawn for this wave.
+            int spawnCount = Mathf.RoundToInt(baseEnemyCount * (currentWave * spawnMultiplier));
+            
+            // 3. Spawn new enemies into random lanes.
+            for (int i = 0; i < spawnCount; i++)
+            {
+                // Randomly choose a lane (0: left, 1: center, 2: right).
+                int lane = Random.Range(0, 3);
+                float laneOffsetX = 0f;
+                if (lane == 0)
+                    laneOffsetX = -laneSpacing;
+                else if (lane == 1)
+                    laneOffsetX = 0f;
+                else if (lane == 2)
+                    laneOffsetX = laneSpacing;
+                
+                // Use the adjustable spawnStartX and spawnStartY for the base spawn position.
+                Vector3 spawnPos = new Vector3(spawnStartX + laneOffsetX, spawnStartY, 0);
+                GameObject newEnemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity, enemyParent);
+                
+                // Optionally attach the EnemyDrift component if not already present.
+                if(newEnemy.GetComponent<EnemyDrift>() == null)
+                    newEnemy.AddComponent<EnemyDrift>();
+            }
+            
+            // 4. Increment the current wave.
+            currentWave++;
+            
+            // 5. Update the wave display text.
+            if (waveText != null)
+            {
+                waveText.text = "Wave: " + currentWave;
+            }
+        }
+    }
+
+    void OnDrawGizmos()
+    {
+        // Draw a red line at the combat trigger Y position
+        Gizmos.color = Color.red;
+        Vector3 lineStart = new Vector3(-1000, combatTriggerY, 0);
+        Vector3 lineEnd = new Vector3(1000, combatTriggerY, 0);
+        Gizmos.DrawLine(lineStart, lineEnd);
     }
 }
