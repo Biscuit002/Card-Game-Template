@@ -27,6 +27,12 @@ public class CardSlot : MonoBehaviour
     void Update()
     {
         CheckForCard();
+        
+        // Update power display every frame in case it changes
+        if (currentCardPower != null)
+        {
+            UpdatePowerDisplay(currentPower);
+        }
     }
 
     private CardDragHandler currentCard;
