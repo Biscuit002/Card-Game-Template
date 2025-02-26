@@ -108,7 +108,9 @@ public class CardSlot : MonoBehaviour
     {
         if (currentCardPower != null)
         {
+            Debug.Log($"Card taking damage: {damage}, current power: {currentPower}");
             currentPower = Mathf.Max(0, currentPower - damage);
+            Debug.Log($"Card power after damage: {currentPower}");
             UpdatePowerDisplay(currentPower);
             
             if (currentPower <= 0)

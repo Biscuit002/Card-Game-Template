@@ -141,12 +141,14 @@ namespace CombatSystem
             if (defenseSlot != null && defenseSlot.HasCard)
             {
                 int defensePower = defenseSlot.GetCurrentPower();
-                int remainingDamage = Mathf.Max(0, enemyPower - defensePower);
                 
-                // Damage the defense card
+                // Deal damage to the defense card
                 defenseSlot.TakeDamage(enemyPower);
                 
-                // If defense card is destroyed, apply remaining damage to player health
+                // Calculate remaining damage after defense
+                int remainingDamage = Mathf.Max(0, enemyPower - defensePower);
+                
+                // If there's remaining damage, apply it to player health
                 if (remainingDamage > 0)
                 {
                     TakeDamage(remainingDamage);
