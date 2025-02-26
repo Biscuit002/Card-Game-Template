@@ -97,4 +97,18 @@ public class CardSlot : MonoBehaviour
             UpdatePowerDisplay(currentPower);
         }
     }
+
+    public void TakeDamage(int damage)
+    {
+        if (currentCardPower != null)
+        {
+            currentPower = Mathf.Max(0, currentPower - damage);
+            UpdatePowerDisplay(currentPower);
+            
+            if (currentPower <= 0)
+            {
+                ClearSlot();
+            }
+        }
+    }
 }

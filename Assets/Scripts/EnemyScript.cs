@@ -30,8 +30,10 @@ public class EnemyScript : MonoBehaviour
     // Track current wave number.
     public int currentWave = 1;
     
-    // Add this property
-    [SerializeField] private float combatTriggerY = -300f; // Y position that triggers combat
+    // Make combat trigger Y public and add a tooltip
+    [SerializeField] 
+    [Tooltip("Y position that triggers combat phase")]
+    public float combatTriggerY = -300f;
     
     // NextWave is called from a UI button.
     // It moves each existing enemy down one grid slot and spawns new enemies at the top in 3 random lanes.

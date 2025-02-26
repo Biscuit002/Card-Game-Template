@@ -2389,7 +2389,7 @@ MonoBehaviour:
   spawnStartY: 4.7
   waveText: {fileID: 1828064740}
   currentWave: 1
-  combatTriggerY: -0.2
+  combatTriggerY: 0.23
 --- !u!212 &1750057665
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -3189,6 +3189,10 @@ MonoBehaviour:
   basePlayerHealth: 100
   nextWaveButton: {fileID: 500351251}
   healthText: {fileID: 97804628}
+  leftLaneX: -200
+  centerLaneX: 0
+  rightLaneX: 200
+  laneMatchTolerance: 10
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
