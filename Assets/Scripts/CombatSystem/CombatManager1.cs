@@ -12,6 +12,8 @@ public class CombatManager1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        print(cardPickup.inTarget);
+        cardPickup = FindObjectOfType<CardPickup>();
         if (cardPickup.inTarget)
         {
             Debug.Log("Card is in target");

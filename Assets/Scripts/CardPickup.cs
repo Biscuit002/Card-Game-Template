@@ -37,6 +37,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     void Update()
     {
+        print(inTarget);
         powerValue = cardPower.GetPower();
         
         if (isMouseDragging)
