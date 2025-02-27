@@ -188,5 +188,47 @@ namespace CombatSystem
                 healthText.text = $"Health: {currentPlayerHealth}";
             }
         }
+
+        void OnDrawGizmos()
+        {
+            // Draw the lane lines in blue
+            Gizmos.color = Color.blue;
+            float lineLength = 2000f; // How tall to make the lines
+            float topY = 1000f;      // Top of the lines
+            float bottomY = -1000f;   // Bottom of the lines
+            
+            // Left lane
+            Gizmos.DrawLine(
+                new Vector3(leftLaneX, bottomY, 0),
+                new Vector3(leftLaneX, topY, 0)
+            );
+            
+            // Center lane
+            Gizmos.DrawLine(
+                new Vector3(centerLaneX, bottomY, 0),
+                new Vector3(centerLaneX, topY, 0)
+            );
+            
+            // Right lane
+            Gizmos.DrawLine(
+                new Vector3(rightLaneX, bottomY, 0),
+                new Vector3(rightLaneX, topY, 0)
+            );
+            
+            // Optionally draw lane tolerance zones
+            Gizmos.color = new Color(0, 0, 1, 0.2f); // Transparent blue
+            foreach (float laneX in new float[] { leftLaneX, centerLaneX, rightLaneX })
+            {
+                // Draw tolerance zone for each lane
+                Gizmos.DrawLine(
+                    new Vector3(laneX - laneMatchTolerance, bottomY, 0),
+                    new Vector3(laneX + laneMatchTolerance, topY, 0)
+                );
+                Gizmos.DrawLine(
+                    new Vector3(laneX + laneMatchTolerance, bottomY, 0),
+                    new Vector3(laneX - laneMatchTolerance, topY, 0)
+                );
+            }
+        }
     }
 } 

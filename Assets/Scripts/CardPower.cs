@@ -3,10 +3,16 @@ using UnityEngine;
 [System.Serializable]
 public class CardPower : MonoBehaviour
 {
+    [SerializeField] private string cardType = "Attack"; // Can be "Attack", "Defense", "Item", "Passive"
     [SerializeField] [Tooltip("The power value of this card")]
     [Range(0, 100)] // Adjust the range as needed for your game
     public int power = 0;
     
+    public string GetCardType()
+    {
+        return cardType;
+    }
+
     public int GetPower()
     {
         return power;
