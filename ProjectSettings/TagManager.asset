@@ -8,6 +8,8 @@ TagManager:
   - Snaptarget
   - AttackSlot
   - DefenseSlot
+  - AttackCard
+  - DefenseCard
   layers:
   - Default
   - TransparentFX

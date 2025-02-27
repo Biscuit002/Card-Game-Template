@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,10 +34,10 @@ public class NextWaveButtonController : MonoBehaviour
     
     private void Update()
     {
-        // Check if any enemies are below the first row
+        // Check if any enemies exist below first row
         bool enemiesBelowFirstRow = CheckEnemiesBelowFirstRow();
         
-        // Update target position based on enemy positions
+        // Update button position and interactability based on enemy positions
         if (enemiesBelowFirstRow && !isButtonHigh)
         {
             isButtonHigh = true;
