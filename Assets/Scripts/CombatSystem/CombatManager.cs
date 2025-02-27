@@ -100,77 +100,86 @@ namespace CombatSystem
 
         private bool IsInLane(float positionX, float laneX)
         {
-            return Mathf.Abs(positionX - laneX) <= laneMatchTolerance;
+            float distance = Mathf.Abs(positionX - laneX);
+            Debug.Log($"Checking lane position: {positionX} against lane {laneX}, distance: {distance}, tolerance: {laneMatchTolerance}");
+            return distance <= laneMatchTolerance;
         }
 
         private IEnumerator ProcessEnemyCombat(EnemyPower enemy, float laneX)
         {
-            // Find the attack card in this lane
+            Debug.Log($"=== Starting Combat in Lane {laneX} ===");
+            
             var attackSlot = GameObject.FindGameObjectsWithTag("SnapTarget")
                 .Select(go => go.GetComponent<CardSlot>())
                 .Where(slot => slot != null && IsInLane(slot.transform.position.x, laneX))
                 .FirstOrDefault();
 
-            // Find the defense card in this lane
             var defenseSlot = GameObject.FindGameObjectsWithTag("DefenseSlot")
                 .Select(go => go.GetComponent<CardSlot>())
                 .Where(slot => slot != null && IsInLane(slot.transform.position.x, laneX))
                 .FirstOrDefault();
 
             int enemyPower = enemy.GetPower();
+            Debug.Log($"Enemy Power: {enemyPower}");
 
-            // Process attack phase first
+            // Process attack phase
             if (attackSlot != null && attackSlot.HasCard)
             {
                 int attackPower = attackSlot.GetCurrentPower();
-                Debug.Log($"Attack card power: {attackPower} vs Enemy power: {enemyPower}");
+                Debug.Log($"Attack card found with power: {attackPower}");
                 
                 if (attackPower >= enemyPower)
                 {
-                    // Enemy dies immediately if attack power is greater or equal
                     Debug.Log("Enemy destroyed by attack card");
                     Destroy(enemy.gameObject);
                     yield break;
                 }
                 else
                 {
-                    // Weaken the enemy if attack power is less than enemy power
                     enemy.TakeDamage(attackPower);
-                    enemyPower = enemy.GetPower(); // Update enemy power after damage
+                    enemyPower = enemy.GetPower();
                     Debug.Log($"Enemy weakened to: {enemyPower}");
                 }
             }
 
-            // Process defense phase - only if enemy survived attack
-            if (defenseSlot != null && defenseSlot.HasCard)
+            // Process defense phase
+            if (enemy != null)
             {
-                int defensePower = defenseSlot.GetCurrentPower();
-                Debug.Log($"Defense card power: {defensePower} vs Enemy power: {enemyPower}");
-
-                if (defensePower >= enemyPower)
+                if (defenseSlot != null && defenseSlot.HasCard)
                 {
-                    // Enemy is blocked completely
-                    defenseSlot.TakeDamage(enemyPower);
-                    Debug.Log("Enemy blocked by defense card");
+                    int defensePower = defenseSlot.GetCurrentPower();
+                    Debug.Log($"Defense card found with power: {defensePower}");
+
+                    if (defensePower >= enemyPower)
+                    {
+                        defenseSlot.TakeDamage(enemyPower);
+                        Debug.Log("Enemy blocked completely");
+                        
+                        if (defenseSlot.GetCurrentPower() <= 0)
+                        {
+                            Debug.Log("Defense card depleted");
+                            defenseSlot.DestroyCard();
+                        }
+                    }
+                    else
+                    {
+                        int remainingDamage = enemyPower - defensePower;
+                        defenseSlot.TakeDamage(defensePower);
+                        TakeDamage(remainingDamage);
+                        Debug.Log($"Defense overwhelmed, player taking {remainingDamage} damage");
+                        defenseSlot.DestroyCard();
+                    }
                 }
                 else
                 {
-                    // Defense card is destroyed and remaining damage goes to player
-                    defenseSlot.TakeDamage(defensePower);
-                    int remainingDamage = enemyPower - defensePower;
-                    Debug.Log($"Defense overwhelmed, player taking {remainingDamage} damage");
-                    TakeDamage(remainingDamage);
+                    Debug.Log($"No defense, full damage to player: {enemyPower}");
+                    TakeDamage(enemyPower);
                 }
-            }
-            else
-            {
-                // No defense card - direct damage to player health
-                Debug.Log($"No defense card, player taking full {enemyPower} damage");
-                TakeDamage(enemyPower);
-            }
 
-            // Enemy dies after combat
-            Destroy(enemy.gameObject);
+                Destroy(enemy.gameObject);
+            }
+            
+            Debug.Log("=== Combat Complete ===");
         }
 
         public void TakeDamage(int damage)

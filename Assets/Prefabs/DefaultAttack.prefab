@@ -73,7 +73,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41325b15bc450e14ea7d02013f536958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardType: Attack
   power: 50
+  powerText: {fileID: 0}
 --- !u!114 &-7861779070774062065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +162,7 @@ GameObject:
   - component: {fileID: 1409056447938894685}
   m_Layer: 3
   m_Name: Image
-  m_TagString: Untagged
+  m_TagString: AttackCard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,7 +236,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41325b15bc450e14ea7d02013f536958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardType: Attack
   power: 1
+  powerText: {fileID: 0}
 --- !u!1 &3255978976281134331
 GameObject:
   m_ObjectHideFlags: 0

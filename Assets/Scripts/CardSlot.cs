@@ -6,6 +6,7 @@ public class CardSlot : MonoBehaviour
     [SerializeField] private float detectionRadius = 0.5f;
     [SerializeField] private TextMeshPro powerText;
     [SerializeField] private LayerMask cardLayer;
+    [SerializeField] private bool isDefenseSlot = false;
 
     void Awake()
     {
@@ -15,7 +16,7 @@ public class CardSlot : MonoBehaviour
         cardLayer = 1 << 3;
 
         // Set both SnapTarget and combat role tags
-        gameObject.tag = "SnapTarget";
+        gameObject.tag = isDefenseSlot ? "DefenseSlot" : "SnapTarget";
         
         // Add combat role tags as secondary tags using GameObject.AddComponent
         GameObject combatTagObject = new GameObject();
@@ -39,8 +40,7 @@ public class CardSlot : MonoBehaviour
     private CardPower currentCardPower;
     private int currentPower;
 
-    public bool HasCard => currentCard != null;
-    [SerializeField] private bool isDefenseSlot = false;
+    public bool HasCard => transform.childCount > 0;
 
     private void CheckForCard()
     {
@@ -91,7 +91,18 @@ public class CardSlot : MonoBehaviour
 
     public int GetCurrentPower()
     {
-        return currentPower;
+        if (HasCard)
+        {
+            CardPower cardPower = GetComponentInChildren<CardPower>();
+            if (cardPower != null)
+            {
+                int power = cardPower.GetPower();
+                Debug.Log($"Slot {gameObject.name} current power: {power}");
+                return power;
+            }
+            Debug.LogError($"Card in slot {gameObject.name} has no CardPower component!");
+        }
+        return 0;
     }
 
     public void RegeneratePower(float multiplier)
@@ -106,17 +117,25 @@ public class CardSlot : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        if (currentCardPower != null)
+        if (HasCard)
         {
-            Debug.Log($"Card taking damage: {damage}, current power: {currentPower}");
-            currentPower = Mathf.Max(0, currentPower - damage);
-            Debug.Log($"Card power after damage: {currentPower}");
-            UpdatePowerDisplay(currentPower);
-            
-            if (currentPower <= 0)
+            CardPower cardPower = GetComponentInChildren<CardPower>();
+            if (cardPower != null)
             {
-                ClearSlot();
+                int currentPower = cardPower.GetPower();
+                Debug.Log($"Slot {gameObject.name} before damage: {currentPower}");
+                cardPower.SetPower(currentPower - damage);
+                Debug.Log($"Slot {gameObject.name} after damage: {cardPower.GetPower()}");
             }
+        }
+    }
+
+    public void DestroyCard()
+    {
+        if (HasCard)
+        {
+            Debug.Log($"Destroying card in slot {gameObject.name}");
+            Destroy(transform.GetChild(0).gameObject);
         }
     }
 }
