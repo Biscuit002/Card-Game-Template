@@ -81,7 +81,6 @@ namespace CombatSystem
         {
             if (enemyManager == null)
             {
-                Debug.LogError("EnemyManager reference is missing!");
                 yield break;
             }
 
@@ -101,13 +100,11 @@ namespace CombatSystem
         private bool IsInLane(float positionX, float laneX)
         {
             float distance = Mathf.Abs(positionX - laneX);
-            Debug.Log($"Checking lane position: {positionX} against lane {laneX}, distance: {distance}, tolerance: {laneMatchTolerance}");
             return distance <= laneMatchTolerance;
         }
 
         private IEnumerator ProcessEnemyCombat(EnemyPower enemy, float laneX)
         {
-            Debug.Log($"=== Starting Combat in Lane {laneX} ===");
             
             var attackSlot = GameObject.FindGameObjectsWithTag("SnapTarget")
                 .Select(go => go.GetComponent<CardSlot>())
@@ -120,17 +117,14 @@ namespace CombatSystem
                 .FirstOrDefault();
 
             int enemyPower = enemy.GetPower();
-            Debug.Log($"Enemy Power: {enemyPower}");
 
             // Process attack phase
             if (attackSlot != null && attackSlot.HasCard)
             {
                 int attackPower = attackSlot.GetCurrentPower();
-                Debug.Log($"Attack card found with power: {attackPower}");
                 
                 if (attackPower >= enemyPower)
                 {
-                    Debug.Log("Enemy destroyed by attack card");
                     Destroy(enemy.gameObject);
                     yield break;
                 }
@@ -138,7 +132,6 @@ namespace CombatSystem
                 {
                     enemy.TakeDamage(attackPower);
                     enemyPower = enemy.GetPower();
-                    Debug.Log($"Enemy weakened to: {enemyPower}");
                 }
             }
 
@@ -148,16 +141,13 @@ namespace CombatSystem
                 if (defenseSlot != null && defenseSlot.HasCard)
                 {
                     int defensePower = defenseSlot.GetCurrentPower();
-                    Debug.Log($"Defense card found with power: {defensePower}");
 
                     if (defensePower >= enemyPower)
                     {
                         defenseSlot.TakeDamage(enemyPower);
-                        Debug.Log("Enemy blocked completely");
                         
                         if (defenseSlot.GetCurrentPower() <= 0)
                         {
-                            Debug.Log("Defense card depleted");
                             defenseSlot.DestroyCard();
                         }
                     }
@@ -166,20 +156,17 @@ namespace CombatSystem
                         int remainingDamage = enemyPower - defensePower;
                         defenseSlot.TakeDamage(defensePower);
                         TakeDamage(remainingDamage);
-                        Debug.Log($"Defense overwhelmed, player taking {remainingDamage} damage");
                         defenseSlot.DestroyCard();
                     }
                 }
                 else
                 {
-                    Debug.Log($"No defense, full damage to player: {enemyPower}");
                     TakeDamage(enemyPower);
                 }
 
                 Destroy(enemy.gameObject);
             }
             
-            Debug.Log("=== Combat Complete ===");
         }
 
         public void TakeDamage(int damage)
