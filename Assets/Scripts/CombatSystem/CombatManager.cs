@@ -86,11 +86,7 @@ namespace CombatSystem
             }
 
             // Find all enemies in this lane that are at or below combat trigger
-            var laneEnemies = GameObject.FindObjectsOfType<EnemyPower>()
-                .Where(enemy => IsInLane(enemy.transform.position.x, laneX) && 
-                               enemy.transform.position.y <= enemyManager.combatTriggerY)
-                .OrderByDescending(enemy => enemy.transform.position.y)  // Process from top to bottom
-                .ToList(); // Convert to list to avoid multiple enumeration
+            var laneEnemies = GameObject.FindObjectsOfType<EnemyPower>().Where(enemy => IsInLane(enemy.transform.position.x, laneX) && enemy.transform.position.y <= enemyManager.combatTriggerY).OrderByDescending(enemy => enemy.transform.position.y);
 
             foreach (var enemy in laneEnemies)
             {
@@ -110,7 +106,7 @@ namespace CombatSystem
         private IEnumerator ProcessEnemyCombat(EnemyPower enemy, float laneX)
         {
             // Find the attack card in this lane
-            var attackSlot = GameObject.FindGameObjectsWithTag("AttackSlot")
+            var attackSlot = GameObject.FindGameObjectsWithTag("SnapTarget")
                 .Select(go => go.GetComponent<CardSlot>())
                 .Where(slot => slot != null && IsInLane(slot.transform.position.x, laneX))
                 .FirstOrDefault();
@@ -121,42 +117,55 @@ namespace CombatSystem
                 .Where(slot => slot != null && IsInLane(slot.transform.position.x, laneX))
                 .FirstOrDefault();
 
-            // Process attack phase
+            int enemyPower = enemy.GetPower();
+
+            // Process attack phase first
             if (attackSlot != null && attackSlot.HasCard)
             {
                 int attackPower = attackSlot.GetCurrentPower();
-                enemy.TakeDamage(attackPower);
+                Debug.Log($"Attack card power: {attackPower} vs Enemy power: {enemyPower}");
                 
-                // If enemy dies from attack, destroy it and end combat for this enemy
-                if (enemy.IsDead)
+                if (attackPower >= enemyPower)
                 {
+                    // Enemy dies immediately if attack power is greater or equal
+                    Debug.Log("Enemy destroyed by attack card");
                     Destroy(enemy.gameObject);
                     yield break;
                 }
+                else
+                {
+                    // Weaken the enemy if attack power is less than enemy power
+                    enemy.TakeDamage(attackPower);
+                    enemyPower = enemy.GetPower(); // Update enemy power after damage
+                    Debug.Log($"Enemy weakened to: {enemyPower}");
+                }
             }
 
-            // Process defense phase - enemy survived attack
-            int enemyPower = enemy.GetPower();
-            
+            // Process defense phase - only if enemy survived attack
             if (defenseSlot != null && defenseSlot.HasCard)
             {
                 int defensePower = defenseSlot.GetCurrentPower();
-                
-                // Deal damage to the defense card
-                defenseSlot.TakeDamage(enemyPower);
-                
-                // Calculate remaining damage after defense
-                int remainingDamage = Mathf.Max(0, enemyPower - defensePower);
-                
-                // If there's remaining damage, apply it to player health
-                if (remainingDamage > 0)
+                Debug.Log($"Defense card power: {defensePower} vs Enemy power: {enemyPower}");
+
+                if (defensePower >= enemyPower)
                 {
+                    // Enemy is blocked completely
+                    defenseSlot.TakeDamage(enemyPower);
+                    Debug.Log("Enemy blocked by defense card");
+                }
+                else
+                {
+                    // Defense card is destroyed and remaining damage goes to player
+                    defenseSlot.TakeDamage(defensePower);
+                    int remainingDamage = enemyPower - defensePower;
+                    Debug.Log($"Defense overwhelmed, player taking {remainingDamage} damage");
                     TakeDamage(remainingDamage);
                 }
             }
             else
             {
                 // No defense card - direct damage to player health
+                Debug.Log($"No defense card, player taking full {enemyPower} damage");
                 TakeDamage(enemyPower);
             }
 
