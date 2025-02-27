@@ -20,6 +20,8 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     private float smallestDistance;
     private GameObject closestTarget; // Track the closest SnapTarget
 
+    private DiscardSlot discardSlot;
+
     void Start()
     {
         isMouseDragging = false;
@@ -29,6 +31,8 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         cardPower = GetComponent<CardPower>();
         displayPower = FindObjectOfType<DisplayPower>();
         gameManager = FindObjectOfType<GameManager>();
+        
+        discardSlot = FindObjectOfType<DiscardSlot>();
     }
 
     void Update()
@@ -52,6 +56,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         else
         {
             checkClosestTarget();
+            CheckDiscardSlot();
         }
     }
 
@@ -81,6 +86,20 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         else
         {
             inTarget = false;
+        }
+    }
+
+    private void CheckDiscardSlot()
+    {
+        if (discardSlot != null)
+        {
+            Vector2 discardPos = discardSlot.transform.position;
+            float distance = Vector2.Distance(transform.position, discardPos);
+            
+            if (distance < 1f)
+            {
+                discardSlot.OnCardPlaced(gameObject);
+            }
         }
     }
 
