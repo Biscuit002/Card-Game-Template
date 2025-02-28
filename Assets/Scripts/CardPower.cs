@@ -14,7 +14,6 @@ public class CardPower : MonoBehaviour
             powerText = GetComponentInChildren<TextMeshPro>();
         }
         UpdatePowerDisplay();
-        Debug.Log($"Card initialized: Type={cardType}, Power={power}");
     }
 
     public string GetCardType()
@@ -31,7 +30,6 @@ public class CardPower : MonoBehaviour
     {
         power = newPower;
         UpdatePowerDisplay();
-        Debug.Log($"Card {cardType} power updated to: {power}");
     }
 
     private void UpdatePowerDisplay()
@@ -39,11 +37,10 @@ public class CardPower : MonoBehaviour
         if (powerText != null)
         {
             powerText.text = power.ToString();
-            Debug.Log($"Updated display text to: {power}");
         }
         else
         {
-            Debug.LogError($"Power Text component missing on {gameObject.name}!");
+
         }
     }
 }

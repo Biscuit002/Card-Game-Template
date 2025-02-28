@@ -4,7 +4,7 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    private Dictionary<GameObject, int> snapTargetPowers = new Dictionary<GameObject, int>();
+    public Dictionary<GameObject, int> snapTargetPowers = new Dictionary<GameObject, int>();
 
     [Header("Player Stats")]
     [SerializeField] private float maxHealth = 100f;
