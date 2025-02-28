@@ -20,12 +20,12 @@ public class FadeManager : MonoBehaviour
         }
     }
 
-    public void StartFadeAndLoad()
+    public void StartFade()
     {
-        StartCoroutine(FadeAndLoadScene());
+        StartCoroutine(FadeIn());
     }
 
-    private IEnumerator FadeAndLoadScene()
+    private IEnumerator FadeIn()
     {
         float elapsedTime = 0f;
         Color panelColor = fadePanel.color;
@@ -42,7 +42,17 @@ public class FadeManager : MonoBehaviour
         // Ensure we're fully black
         panelColor.a = 1f;
         fadePanel.color = panelColor;
+    }
 
+    public void StartFadeAndLoad()
+    {
+        StartCoroutine(FadeAndLoadScene());
+    }
+
+    private IEnumerator FadeAndLoadScene()
+    {
+        yield return StartCoroutine(FadeIn());
+        
         // Load the new scene
         SceneManager.LoadScene(sceneToLoad);
     }
