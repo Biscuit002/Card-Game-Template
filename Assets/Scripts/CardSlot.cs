@@ -97,10 +97,10 @@ public class CardSlot : MonoBehaviour
             if (cardPower != null)
             {
                 int power = cardPower.GetPower();
-                Debug.Log($"Slot {gameObject.name} current power: {power}");
+
                 return power;
             }
-            Debug.LogError($"Card in slot {gameObject.name} has no CardPower component!");
+
         }
         return 0;
     }
@@ -123,7 +123,6 @@ public class CardSlot : MonoBehaviour
             if (cardPower != null)
             {
                 int currentPower = cardPower.GetPower();
-                Debug.Log($"Slot {gameObject.name} before damage: {currentPower}");
                 cardPower.SetPower(currentPower - damage);
                 Debug.Log($"Slot {gameObject.name} after damage: {cardPower.GetPower()}");
             }
