@@ -193,6 +193,13 @@ namespace CombatSystem
                 healthText.text = $"Health: {currentPlayerHealth}";
             }
         }
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.gameObject.CompareTag("SnapTarget"))
+            {
+                print("SnapTarget entered");
+            }
+        }
 
         void OnDrawGizmos()
         {
