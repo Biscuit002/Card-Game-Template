@@ -61,7 +61,6 @@ MonoBehaviour:
   powerValue: 0
   displayPower: {fileID: 0}
   gameManager: {fileID: 0}
-  snapTargetListValue: 0
 --- !u!114 &7924716003680253138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,7 +73,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41325b15bc450e14ea7d02013f536958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardType: Attack
   power: 1
+  powerText: {fileID: 0}
 --- !u!114 &4365721084577245108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,7 +102,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58572506d411413497b10ad7c208f7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  handAreaPanel: {fileID: 0}
 --- !u!61 &-4357936446798585012
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -206,15 +206,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4764151, g: 1, b: 0.5092675, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 8271085590458579189, guid: 429cc6b7bc3ad43c2ab44c61509aff34, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -257,7 +257,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 22.800049, y: 118.20007}
+  m_AnchoredPosition: {x: 26, y: 79}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5053872146460246032
@@ -353,7 +353,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 42.215168, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
