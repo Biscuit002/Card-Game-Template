@@ -40,8 +40,11 @@ public class CombatManager1 : MonoBehaviour
             {
                 enemyClone = Instantiate(enemyPrefab, enemyPosition3, Quaternion.identity);
             }
-            enemyClone.transform.position = new Vector3(enemyClone.transform.position.x, -0.1f, 0);
             enemyCooldown = 3;
+        }
+        if (enemyClone != null)
+        {
+            enemyClone.transform.position = new Vector3(enemyClone.transform.position.x, enemyClone.transform.position.y - Time.deltaTime, enemyClone.transform.position.z);
         }
     }
 }

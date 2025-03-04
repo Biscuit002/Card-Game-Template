@@ -10,6 +10,7 @@ TagManager:
   - DefenseSlot
   - AttackCard
   - DefenseCard
+  - Enemy
   layers:
   - Default
   - TransparentFX
