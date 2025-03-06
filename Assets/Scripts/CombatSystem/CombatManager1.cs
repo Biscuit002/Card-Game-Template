@@ -1,15 +1,21 @@
 using Unity.VisualScripting;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class CombatManager1 : MonoBehaviour
 {
-
     private float enemyCooldown;
     private Vector3 enemyPosition1;
     private Vector3 enemyPosition2;
     private Vector3 enemyPosition3;
+    private Vector3 spawnPosition;
+    private int randomValue;
+    
     public GameObject enemyPrefab;
-    private GameObject enemyClone;
+    public GameManager gameManager;
+
+    private List<GameObject> spawnedEnemies = new List<GameObject>();
+    
     void Start()
     {
         enemyCooldown = 3;
@@ -18,33 +24,47 @@ public class CombatManager1 : MonoBehaviour
         enemyPosition2 = new Vector3(5.43f, 6, 0);
         enemyPosition3 = new Vector3(7.38f, 6, 0);
     }
+    
     void Update()
     {
-        enemyPrefab = GameObject.Find("Enemy");
         if (enemyCooldown > 0)
         {
             enemyCooldown -= Time.deltaTime;
         }
         else
         {
-            int randomValue = Random.Range(1, 4);
+            randomValue = Random.Range(1, 4);
             if (randomValue == 1)
             {
-                enemyClone = Instantiate(enemyPrefab, enemyPosition1, Quaternion.identity);
+                spawnPosition = enemyPosition1;
             }
-            if (randomValue == 2)
+            if (randomValue == 2) 
             {
-                enemyClone = Instantiate(enemyPrefab, enemyPosition2, Quaternion.identity);
+                spawnPosition = enemyPosition2;
             }
             if (randomValue == 3)
             {
-                enemyClone = Instantiate(enemyPrefab, enemyPosition3, Quaternion.identity);
+                spawnPosition = enemyPosition3;
             }
+                
+            GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+            spawnedEnemies.Add(newEnemy);
             enemyCooldown = 3;
         }
-        if (enemyClone != null)
+        
+        for (int i = spawnedEnemies.Count - 1; i >= 0; i--)
         {
-            enemyClone.transform.position = new Vector3(enemyClone.transform.position.x, enemyClone.transform.position.y - Time.deltaTime, enemyClone.transform.position.z);
+            GameObject enemy = spawnedEnemies[i];
+            enemy.transform.position += Vector3.down * Time.deltaTime;
+            if (enemy.transform.position.y < -1 && randomValue == 1)
+            {
+                //print("get card value collumn 1");
+            }
+            if (enemy.transform.position.y < -6)
+            {
+                Destroy(enemy);
+                spawnedEnemies.RemoveAt(i);
+            }
         }
     }
 }

@@ -393,7 +393,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46330c81097214bfda4a3cd81089683d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyPrefab: {fileID: 0}
+  enemyPrefab: {fileID: 228115322}
+  gameManager: {fileID: 0}
 --- !u!1 &232948061
 GameObject:
   m_ObjectHideFlags: 0
@@ -1337,7 +1338,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ee8c48878610400591dbc552a9c8d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 0
 --- !u!4 &624494163
 Transform:
   m_ObjectHideFlags: 0
@@ -2465,6 +2466,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3779752867888101339, guid: cc671a54fa98c4a4d9f7fb494c07e5c6, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2780,6 +2785,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyPrefab: {fileID: 0}
+  gameManager: {fileID: 0}
 --- !u!1001 &1753234028
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3700,7 +3706,7 @@ Transform:
   m_GameObject: {fileID: 2067812282}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.16, y: 4.09, z: 0}
+  m_LocalPosition: {x: -10.16, y: -0.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3731,7 +3737,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2067812282}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c76d0897c84147b47bcc59cf6c56a886, type: 3}
   m_Name: 
