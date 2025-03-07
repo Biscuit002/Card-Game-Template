@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour
             buffTimeRemaining -= Time.deltaTime;
             if (buffTimeRemaining <= 0)
             {
-                temporaryBuff = 0; // Remove buff when time expires
+                temporaryBuff = 0;
             }
         }
     }

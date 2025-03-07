@@ -13,6 +13,7 @@ public class CombatManager1 : MonoBehaviour
     
     public GameObject enemyPrefab;
     public GameManager gameManager;
+    public CardPickup cardPickup;
 
     private List<GameObject> spawnedEnemies = new List<GameObject>();
     
@@ -27,11 +28,12 @@ public class CombatManager1 : MonoBehaviour
     
     void Update()
     {
+        cardPickup = FindObjectOfType<CardPickup>();
         if (enemyCooldown > 0)
         {
             enemyCooldown -= Time.deltaTime;
         }
-        else
+        if (enemyCooldown <= 0)
         {
             randomValue = Random.Range(1, 4);
             if (randomValue == 1)
@@ -50,17 +52,39 @@ public class CombatManager1 : MonoBehaviour
             GameObject newEnemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
             spawnedEnemies.Add(newEnemy);
             enemyCooldown = 3;
+
+            print(cardPickup.closestTarget);
+
         }
         
         for (int i = spawnedEnemies.Count - 1; i >= 0; i--)
         {
             GameObject enemy = spawnedEnemies[i];
+            GameObject currentTarget = cardPickup.closestTarget;
             enemy.transform.position += Vector3.down * Time.deltaTime;
             if (enemy.transform.position.y < -1 && randomValue == 1)
             {
-                //print("get card value collumn 1");
+                print(cardPickup.GetSnapTargetPower(currentTarget));
+                if (cardPickup.GetSnapTargetPower(currentTarget) >= 0)
+                {
+                    Destroy(enemy);
+                    spawnedEnemies.RemoveAt(i);
+                }
+            }
+            if (enemy.transform.position.y < -1 && randomValue == 1)
+            {
+                //print("get card value collumn 2");
+            }
+            if (enemy.transform.position.y < -1 && randomValue == 1)
+            {
+               // print("get card value collumn 3");
             }
             if (enemy.transform.position.y < -6)
+            {
+                Destroy(enemy);
+                spawnedEnemies.RemoveAt(i);
+            }
+            if (spawnedEnemies.Count > 3)
             {
                 Destroy(enemy);
                 spawnedEnemies.RemoveAt(i);

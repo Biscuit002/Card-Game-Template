@@ -18,7 +18,7 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public GameManager gameManager;
     
     private float smallestDistance;
-    private GameObject closestTarget; // Track the closest SnapTarget
+    public GameObject closestTarget; // Track the closest SnapTarget
 
     private DiscardSlot discardSlot;
 
@@ -82,6 +82,9 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
             // Update the specific SnapTarget with this card's power value
             gameManager.UpdateSnapTargetPower(closestTarget, powerValue);
+
+            // Now retrieve and print the power value of the card in the SnapTarget slot
+            int snapTargetPower = GetSnapTargetPower(closestTarget);
         }
         else
         {
@@ -106,12 +109,26 @@ public class CardPickup : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         isMouseDragging = true;
-        canvas.sortingOrder = 100;
+        //canvas.sortingOrder = 100;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
         isMouseDragging = false;
-        canvas.sortingOrder = originalSortingOrder;
+       // canvas.sortingOrder = originalSortingOrder;
+    }
+
+    // Retrieve the power value of a SnapTarget from the GameManager
+    public int GetSnapTargetPower(GameObject target)
+    {
+        if (gameManager.snapTargetPowers.ContainsKey(target))
+        {
+            return gameManager.snapTargetPowers[target];
+        }
+        else
+        {
+            Debug.LogWarning("SnapTarget not found in snapTargetPowers.");
+            return 0; // Or any default value you want
+        }
     }
 }
